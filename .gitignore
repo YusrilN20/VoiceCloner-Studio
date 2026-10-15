@@ -1,0 +1,24 @@
+# Cache & Temporary
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Private audio data (jangan upload suara pribadi atau audio output ke public repo)
+outputs/
+profiles/
+*.wav
+*.mp3
+*.aac
+*.flac
+*.ogg
+
+# Local user configurations
+profiles.json
+settings.json
+
+# System & OS
+Thumbs.db
+.DS_Store
+.idea/
+.vscode/
