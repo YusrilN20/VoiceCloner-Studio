@@ -22,3 +22,10 @@ Thumbs.db
 .DS_Store
 .idea/
 .vscode/
+
+# Local environment
+.venv/
+.uvcache/
+.wheels/
+tests/_smoke.py
+*.tmp

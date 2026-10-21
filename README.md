@@ -1,54 +1,39 @@
-# 🎙️ VoiceCloner Studio
+# VoiceCloner Studio
 
-A lightweight, dedicated, and offline Voice Cloning Text-to-Speech (TTS) studio powered by **k2-fsa/OmniVoice** and **faster-whisper**.
+Studio kloning suara (TTS) lokal & offline berbasis **k2-fsa/OmniVoice** + **faster-whisper**. Dioptimalkan untuk GPU 4 GB (GTX 1650).
 
-Designed specifically for content creators who need fast, local voice cloning without the bloat of video dubbing or heavy background processes.
+## Fitur
 
----
+- **Profil suara permanen**: unggah rekaman sekali, pakai terus.
+- **Potong referensi otomatis**: rekaman sepanjang apa pun diambil maksimal 10 detik bagian dengan ucapan terbanyak, dipotong di jeda (bukan di tengah kata), mono 24 kHz, volume dinormalkan.
+- **Transkrip akurat & bisa diedit**: Whisper dipaksa ke bahasa yang dipilih dan menghasilkan tanda baca; transkrip bisa dikoreksi lalu disimpan.
+- **Cache suara referensi**: referensi di-encode sekali per profil (`profiles/_cache/*.pt`), generate berikutnya langsung memakainya.
+- **Model dimuat saat aplikasi dibuka**, bukan saat klik pertama.
+- **Mode Cepat / Seimbang / Kualitas** (16 / 24 / 32 langkah) + pengaturan lanjutan.
+- **Angka dibaca sebagai kata** (2025 -> "dua ribu dua puluh lima").
+- 100% lokal, tidak ada audio/teks yang keluar dari komputer.
 
-## ✨ Features
+## Instalasi (Windows)
 
-- **⚡ Fast & Optimized:** Tuned to run smoothly even on 4GB VRAM GPUs (e.g. NVIDIA GTX 1650).
-- **👤 Persistent Voice Profiles:** Save your voice sample once; use it forever without re-uploading.
-- **🎙️ Automatic Transcription (ASR):** Uses local Whisper AI to automatically transcribe reference voice clips.
-- **⚙️ Full Production Controls:** Fine-tune `Steps`, `CFG Guidance`, `Speed`, `t_shift`, `Pos/Class Temperature`, `Layer Penalty`, `Denoise`, and `Postprocess`.
-- **💾 Auto-Save Settings:** Remembers your favorite parameters across app restarts.
-- **🔒 Privacy-First & Offline:** 100% runs locally on your PC. No audio or text ever leaves your machine.
+Butuh: [uv](https://docs.astral.sh/uv/), GPU NVIDIA (disarankan), FFmpeg di PATH.
 
----
+1. Klik dua kali `Setup_VoiceCloner.bat` (membuat `.venv`, memasang torch CUDA).
+2. Klik dua kali `Jalankan_VoiceCloner.bat`, lalu buka `http://127.0.0.1:7865`.
 
-## 🚀 Getting Started
+## Tips kemiripan suara
 
-### 1. Requirements
-- Python 3.10 or 3.11
-- NVIDIA GPU with CUDA support (recommended)
-- FFmpeg installed in system PATH
+1. **Referensi 6-10 detik**, bersih, satu orang, tanpa musik/gema. Lebih panjang tidak membuat lebih mirip (OmniVoice dilatih dengan contoh 3-10 detik) dan memperlambat proses.
+2. **Transkrip harus persis** sama dengan ucapan di audio, termasuk tanda baca. Tempo hasil dihitung dari transkrip / durasi referensi.
+3. **Gaya bicara ikut isi referensi**: mau gaya bercerita, pakai potongan saat orangnya bercerita. Satu orang boleh punya beberapa profil (`opel_santai`, `opel_serius`).
+4. **Jeda diatur lewat tanda baca di naskah**: `,` jeda pendek, `.` jeda kalimat, `...` jeda ragu.
+5. Class temp 0 = paling mirip & stabil. Naikkan ke 0.1-0.3 hanya bila hasil terasa datar.
 
-### 2. Installation
+## Tes
+
 ```bash
-git clone https://github.com/YusrilN20/VoiceCloner-Studio.git
-cd VoiceCloner-Studio
-
-pip install -r requirements.txt
+python tests/test_pick_window.py
 ```
 
-### 3. Run the Studio
-```bash
-python app.py
-```
-Or simply double-click `Jalankan_VoiceCloner.bat` on Windows.
+## Lisensi
 
-The studio will launch in your browser at `http://127.0.0.1:7865`.
-
----
-
-## 💡 Best Practices for Voice Cloning
-
-1. **Reference Audio:** Use 5–10 seconds of clear speech (no background music/noise).
-2. **Speed Setting:** Set `0.85x – 0.95x` for calm monologue / storytelling tone.
-3. **Punctuation:** Use commas (`,`) and ellipses (`...`) in your script to naturally control pauses and breathing.
-
----
-
-## 📜 License
-MIT License. Feel free to use and customize for your own content creation!
+MIT. OmniVoice: Apache-2.0. Kloning suara hanya dengan izin pemilik suara.
